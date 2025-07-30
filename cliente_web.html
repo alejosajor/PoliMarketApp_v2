@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Cliente Web PoliMarket</title>
+</head>
+<body>
+  <h1>Consulta rápida de productos y entregas</h1>
+  <button onclick="cargarProductos()">Ver Productos</button>
+  <button onclick="cargarEntregas()">Ver Entregas</button>
+  <pre id="resultado"></pre>
+
+  <script>
+    function cargarProductos() {
+      fetch('/data/ventas.json')
+        .then(res => res.json())
+        .then(data => {
+          document.getElementById('resultado').textContent = 
+            'Productos: ' + data.productos.join(', ');
+        });
+    }
+
+    function cargarEntregas() {
+      fetch('/data/entregas.json')
+        .then(res => res.json())
+        .then(data => {
+          const lista = data.pendientes.map(e => 
+            `Entregar ${e.producto} a ${e.cliente}`).join('\n');
+          document.getElementById('resultado').textContent = lista;
+        });
+    }
+  </script>
+</body>
+</html>

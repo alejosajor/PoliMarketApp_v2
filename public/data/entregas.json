@@ -1,0 +1,10 @@
+{
+  "pendientes": [
+    { "cliente": "Empresa A", "producto": "Producto 1" },
+    { "cliente": "Cliente B", "producto": "Producto 2" },
+    { "cliente": "Empresa C", "producto": "Producto 3" },
+    { "cliente": "Empresa D", "producto": "Producto 4" },
+    { "cliente": "Cliente B", "producto": "Producto 5" },
+    { "cliente": "Cliente F", "producto": "Producto 6" }
+  ]
+}
