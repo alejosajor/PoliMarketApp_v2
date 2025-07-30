@@ -1,0 +1,12 @@
+# Conclusiones del proyecto PoliMarketApp
+
+1. **Modularidad efectiva:** Separar cada área de negocio en componentes independientes facilitó la organización del código y su mantenimiento.
+2. **Simulación de backend:** El uso de archivos JSON como fuente de datos permitió simular fácilmente la interacción entre áreas y reflejar reglas del negocio.
+3. **Requisitos funcionales implementados:**
+   - Autorización de vendedores por Recursos Humanos.
+   - Consulta de clientes y productos desde Ventas.
+   - Verificación de stock y conexión con Bodega.
+   - Consulta de proveedor por producto agotado.
+   - Gestión de entregas desde Entregas.
+4. **Interoperabilidad:** Se desarrollaron dos clientes (uno en React y otro en Node.js) que consumen funcionalidades clave del sistema, demostrando la flexibilidad del backend simulado.
+5. **Escalabilidad:** El diseño puede evolucionar fácilmente hacia una arquitectura con APIs reales, integrando bases de datos o autenticación avanzada.
