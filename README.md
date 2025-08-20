@@ -1,10 +1,10 @@
-# PoliMarketApp — Addendum U3/U4 (GoF + Integración completa)
+# PoliMarketApp v2 — Trabajo unidades 3 y 4 (Patrones GoF y Modelos de madurez)
 
-> **Contexto**: Este README complementa la entrega previa (U2). Documenta los cambios de **U3/U4**, todos los **adicionales usados** (patrones GoF, provider, hooks, servicios, componentes actualizados), instrucciones de integración/ejecución, comparación U2→U3/U4, modelo de madurez, conclusiones y referencias APA.
+> **Contexto**: Este README complementa la entrega previa a la unidad 2. Documenta los cambios que se realizaron para dar respuesta a las unidades 3 y 4 (patrones GoF, provider, hooks, servicios, componentes actualizados).
 
 ---
 
-## 1) Alcance del Addendum (U3/U4)
+## 1) Entregables
 
 - **Patrones GoF aplicados (5)**: **Facade**, **Strategy**, **Observer**, **Adapter**, **Factory Method**.
 - **UML 2.5** (clases y componentes) con estereotipos de patrones.
@@ -18,6 +18,7 @@
 ## 2) Árbol de archivos (adiciones y cambios)
 
 **Nuevos**:
+```
 src/patterns/PatternsProvider.jsx
 src/patterns/Facade_VentasBodega.js
 src/patterns/Strategy_StockReservation.js
@@ -27,15 +28,16 @@ src/patterns/hooks/useStockEvents.js
 src/components/settings/EstrategiaSelector.jsx
 src/services/ventasService.js
 src/services/bodegaService.js
-
+```
 
 **Modificados**:
+```
 src/App.jsx
 src/components/Ventas.jsx
 src/components/Bodega.jsx
 src/components/Proveedores.jsx
 src/components/Entregas.jsx
-
+```
 
 > *Recurso no modificado*: `src/components/RecursosHumanos.jsx` (control de autorización).
 
@@ -66,10 +68,59 @@ import { PatternsProvider } from "./patterns/PatternsProvider.jsx";
     <AppContent />
   </PatternsProvider>
 </Router>
-
+```
 
 ### 4.2 Elegir estrategia desde la UI (opcional)
+```
 // src/components/settings/EstrategiaSelector.jsx
 import { usePatterns } from "../../patterns/PatternsProvider.jsx";
 // <EstrategiaSelector /> dentro de App cuando el usuario esté autorizado
+```
+
+### 4.3 Usar la Facade en Ventas
+Reemplazar coordinación manual por:
+
+```
+const { facade } = usePatterns();
+const pedido = facade.crearPedidoYReservar("CLI-001", [{ sku, cantidad: 1 }], "online");
+const disponibilidad = facade.consultarDisponibilidad(sku);
+```
+
+### 4.4 Sembrar y operar Bodega
+
+- bodegaService.setStockBulk(obj) inicializa stock desde /data/bodega.json.
+- facade.consultarDisponibilidad(sku) muestra existencias.
+- Botones de Entrada/Salida emiten eventos: EntradaRegistrada / SalidaRegistrada.
+  
+
+### 4.5 Observer en Entregas (y otros)
+
+Hook para escuchar eventos globales:
+```
+// src/patterns/hooks/useStockEvents.js
+useStockEvents((evt) => { if (evt.type === "SalidaRegistrada") { /* actualizar UI */ }});
+```
+
+### 4.6 Adapter con Proveedores
+```
+const adapter = new ProveedorAdapter(apiProveedorX);
+const items = await adapter.listarProductos();
+await adapter.registrarCompra([{ sku: "P-001", cantidad: 10, costo: 2200 }]);
+```
+
+### 4.7 Factory Method en Ventas
+
+- ventasService.crearPedido({ clienteId, lineas, tipo }) delega en PedidoFactory.
+
+
+
+
+
+
+
+
+
+
+
+
 
